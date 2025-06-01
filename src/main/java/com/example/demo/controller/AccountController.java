@@ -20,23 +20,27 @@ public class AccountController {
 	@Autowired
 	Account account;
 
+	// 初期表示
 	@GetMapping("/")
 	public String index() {
 		session.invalidate();
 		return "login";
 	}
 
+	// ログイン処理
 	@PostMapping("/login")
 	public String login(
 			@RequestParam("name") String name,
 			Model model) {
+
+		// パラメータが空文字の場合はエラーメッセージを出力
 		if (name == null || name.length() == 0) {
-			model.addAttribute("nessage", "名前を入力してください");
+			model.addAttribute("message", "名前を入力してください");
 			return "login";
 		}
+		// セッションスコープのAccountオブジェクトに名前をセット
 		account.setName(name);
 
 		return "input";
 	}
-
 }
